@@ -98,6 +98,7 @@ rownames(summary_stat) = c("dividend yield", "dividend yield SE", "term spread",
 coef_matrix = t(rbind(t(lmSumm(pie1)$coef)[1,], t(lmSumm(out3)$coef)[1,], t(lmSumm(out12)$coef)[1,],
              t(lmSumm(out24)$coef)[1,],t(lmSumm(out60)$coef)[1,]))
 se_matrix = t(rbind(out1SE, out3SE, out12SE,out24SE,out60SE))
+se_matrix = rbind(se_matrix[2,],se_matrix[3,],se_matrix[4,],se_matrix[1,])
 
 colnames(coef_matrix) = c("1-month", "3-month", "12-month", "24-month", "60-month")
 colnames(se_matrix) = c("1-month", "3-month", "12-month", "24-month", "60-month")
