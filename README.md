@@ -11,5 +11,6 @@ This is a series of regressions investigating the predictable power of three var
 
 Default Spreads was calculated by subtracting AAAFFM from BAAFFM.
 Dividend Yield was calculated by taking the sum of the dividends over the last 12 months and dividing by the current price.
-Newey-West SEs were used to correct for heteroskedasticity in the error terms 
+Newey-West SEs were used to correct for heteroskedasticity in the error terms.
+It was observed that the excess return is higher in bad times and lower in good times. 
 
