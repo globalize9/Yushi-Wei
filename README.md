@@ -14,3 +14,5 @@ Dividend Yield was calculated by taking the sum of the dividends over the last 1
 Newey-West SEs were used to correct for heteroskedasticity in the error terms.
 It was observed that the excess return is higher in bad times and lower in good times. 
 
+## Monto-Carlo Delta-Hedged Option in R
+The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. 
