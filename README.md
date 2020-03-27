@@ -1,5 +1,5 @@
 # Welcome! 
-Hi, welcome to Yushi's repsoitory! You will find sample projects that I've worked on here. Feel free to reach out if you have any suggestion/comment. Enjoy! 
+Hi, welcome to Yushi's repository! You will find sample projects that I've worked on here. Feel free to reach out if you have any suggestion/comment. Enjoy! 
 
  
 ## Return Forecasting Regressions in R
