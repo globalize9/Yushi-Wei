@@ -55,7 +55,7 @@ PS1Q1 = function(crsp) {
   setkey(dt, PERMNO, date)
   
   # check those values for lagged
-  dt[date %between% c("2019-10-31", "2020-01-01")]
+  dt[date %between% c("2002-10-30", "2010-01-01")]
   
   dt[, mkt_wt := lagMKTCAP/Stock_lag_MV, by = date]
   # dt[, lengthday := .N, by = date] # this is same as length() 
@@ -65,8 +65,9 @@ PS1Q1 = function(crsp) {
   dt[, Year := as.integer(format(date,"%Y"))]
   dt[, Month := as.integer(format(date, "%m"))]
   
-  clean_dt = dt[,c("Year", "Month", "Stock_lag_MV","Stock_Ew_Ret","Stock_Vw_Ret")]
+  clean_dt = unique(dt, by = "date")
+  clean_dt = clean_dt[,c("Year", "Month", "Stock_lag_MV","Stock_Ew_Ret","Stock_Vw_Ret")]
+  setorder(clean_dt)
   return(clean_dt)
 }
-
 clean_dt = PS1Q1(crsp)
