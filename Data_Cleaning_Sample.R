@@ -8,7 +8,7 @@ crsp = data.table(read.csv("CRSP_Stocks.csv"))
 crsp[,date := as.Date(as.character(crsp$date), format = "%Y/%m/%d")]
 # crsp$date = anydate(crsp$date) # same effect as above
 
-PS1Q1 = function(crsp) {
+crsp_cleaning = function(crsp) {
   setkey(crsp, PERMNO, EXCHCD)
   # subsetting the crsp data common shares
   dt = crsp[SHRCD == 10 | SHRCD == 11]
@@ -70,4 +70,4 @@ PS1Q1 = function(crsp) {
   setorder(clean_dt)
   return(clean_dt)
 }
-clean_dt = PS1Q1(crsp)
+clean_dt = crsp_cleaning(crsp)
