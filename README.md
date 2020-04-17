@@ -21,4 +21,6 @@ The purpose of this study is to examine the effect of large price movement on th
 ![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Delta_Hedge_Upward_Jump10.png)
 
 ## Fama French Market Portfolio Replication
-CRSP data was cleaned according to the Ken-French procedure before calculating the value-weighted and equal-weighted returns. Full procedure is in the [Data_Cleaning_Sample_Work_Description.pdf](https://github.com/globalize9/Yushi-Wei/blob/master/Data_Cleaning_Sample_Work_Description.pdf)
+CRSP data was cleaned according to the Ken-French procedure before calculating the value-weighted and equal-weighted market excess returns. I report a correlation of 0.99998 with the Fama-French value-weighted market portfolio. Summary statistics of the two series are shown below. The full procedure is located here: [README_Fama_French_Mkt_Replication.pdf.pdf](https://github.com/globalize9/Yushi-Wei/blob/master/README_Fama_French_Mkt_Replication.pdf)
+
+![Fama-French VWRETD Replication Summary Statistics](https://github.com/globalize9/Yushi-Wei/blob/master/Fama_French_Mkt_Replication_Summary_Table.jpg)
