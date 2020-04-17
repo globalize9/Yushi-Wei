@@ -20,5 +20,5 @@ The purpose of this study is to examine the effect of large price movement on th
 
 ![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Delta_Hedge_Upward_Jump10.png)
 
-## Data Cleaning in R
+## Fama French Market Portfolio Replication
 CRSP data was cleaned according to the Ken-French procedure before calculating the value-weighted and equal-weighted returns. Full procedure is in the [Data_Cleaning_Sample_Work_Description.pdf](https://github.com/globalize9/Yushi-Wei/blob/master/Data_Cleaning_Sample_Work_Description.pdf)
