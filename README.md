@@ -23,5 +23,5 @@ It was observed that the excess return is higher in bad times and lower in good 
 ## Monto-Carlo Delta-Hedged Option in R
 The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. 
 
-![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Delta_Hedge_Upward_Jump10.png)
+![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Delta_Hedge_Upward_Jump10.png)
 
