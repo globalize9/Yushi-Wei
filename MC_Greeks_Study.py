@@ -26,9 +26,6 @@ def MonteCarloOptions(S0, r, sigma, T, X, option_type = 'call', n = 1000000):
         option_price = 'invalid selection'
     return(option_price)
 
-option_price = MonteCarloOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
-print('Monte-Carlo simulated option price is: ${:.5f}'.format(option_price))
-
 # approximation of the normal distribution
 def N_d(x):
     d = [0, 0.0498673470, 0.0211410061, 0.0032776263, 
@@ -47,7 +44,7 @@ def N_d(x):
     return(approx)
 
 # BSM formula
-def BSMOptions(S0, r, sigma, T, X, option_type = 'call'):
+def BSMOptionsN_Approx(S0, r, sigma, T, X, option_type = 'call'):
     d1 = (np.log(S0 / X) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
     d2 = (np.log(S0 / X) + (r - 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
     if option_type == 'call':
@@ -57,10 +54,24 @@ def BSMOptions(S0, r, sigma, T, X, option_type = 'call'):
     if option_type != 'call' and option_type != 'put': 
         option_price = 'invalid selection'
     return(option_price)
-    
-BSM_Option = BSMOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
-print('BSM option price with normal approximation is: ${:.5f}'.format(BSM_Option))
 
+def BSMOptions(S0, r, sigma, T, X, option_type = 'call'):
+    d1 = (np.log(S0 / X) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+    d2 = (np.log(S0 / X) + (r - 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+    if option_type == 'call':
+        option_price = (S0 * si.norm.cdf(d1) - X * np.exp(-r * T) * si.norm.cdf(d2))
+    if option_type == 'put':
+        option_price = -(S0 * si.norm.cdf(-d1) + X * np.exp(-r * T) * si.norm.cdf(-d2))
+    if option_type != 'call' and option_type != 'put': 
+        option_price = 'invalid selection'
+    return(option_price)
+    
+BSM_Option_N_Approx = BSMOptionsN_Approx(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+BSM_Option = BSMOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+option_price = MonteCarloOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+print('Monte-Carlo simulated option price is: ${:.5f}'.format(option_price))
+print('BSM option price with normal approximation is: ${:.5f}'.format(BSM_Option_N_Approx))
+print('BSM option price without normal approximation is: ${:.5f}'.format(BSM_Option))
 
 def GreekStudy(S_0, r, sigma, T, X, dt):
     def Greeks(S0, r, sigma, T, X):
