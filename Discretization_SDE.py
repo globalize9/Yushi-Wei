@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 
 def Discretization_SDE(rho, r, S0, V0, sigma, alpha, beta, T, K):
-    n = 1000
+    n = 10000
     dt = 0.01 # dynamic, can adjust n and dt to fine tune
 
     # switch
@@ -71,5 +71,5 @@ def Discretization_SDE(rho, r, S0, V0, sigma, alpha, beta, T, K):
 
 reflection, partial_truncation, full_truncation = Discretization_SDE(rho = -0.6, r = 0.03, S0 = 48, V0 = 0.05, sigma = 0.42, alpha = 5.8, beta = 0.0625, T = 1, K = 50)
 
-print('Reflection: {:.5f}, Partial Truncation: {:.5f}, and Full Truncation: {:.5f}'.format(reflection, partial_truncation, full_truncation))
+print('Reflection: ${:.5f}, Partial Truncation: ${:.5f}, and Full Truncation: ${:.5f}'.format(reflection, partial_truncation, full_truncation))
 
