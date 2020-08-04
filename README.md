@@ -19,7 +19,7 @@ Time step size of dt = 0.004, initial stock price ranges from $15 to $25 in $1 i
 ## Estimation of European Call option with Monte-Carlo via discretization of SDE  
 The 2-factor model  for stock prices with stochastic volatility is discretized via Reflection, Partial Truncation and Full Truncation to estimate the European Call option via Monte-Carlo simulation. With 10,000 simulations, the following results were observed: Reflection: $4.33288, Partial Truncation: $4.28788, and Full Truncation: $4.39205
 
-![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Discretization_SDE.png)
+![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Discretization_SDE.png =250x250)
 
 ## Fama French Market Portfolio Replication
 CRSP data was cleaned according to the Ken-French procedure before calculating the value-weighted and equal-weighted market excess returns. I report a correlation of 0.99998 with the Fama-French value-weighted market portfolio. Summary statistics of the two series are shown below. The full procedure is located here: [README_Fama_French_Mkt_Replication](https://github.com/globalize9/Yushi-Wei/blob/master/README_Fama_French_Mkt_Replication.pdf)
