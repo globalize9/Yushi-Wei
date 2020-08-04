@@ -3,11 +3,13 @@ Hi, welcome to Yushi's repository! You will find sample projects that I've worke
 
 ## Monte-Carlo Delta-Hedged Option in R
 The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. 
+
 ![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Delta_Hedge_Upward_Jump10.png)
 
 
 ## Pricing of Fixed Strike Lookback Call and Put Options with Monte-Carlo Simulation in Python
 Monte-Carlo simulation along with antithetic variance reduction were used to simulate the stock price. Initial stock price of $98, strike of $100, interest rate of 3%, 12-month, with varying volatilties from 12% to 48% in increments of 4%.
+
 ![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Lookback_Options_Varying_Vol.png)
 
 
