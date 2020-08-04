@@ -4,12 +4,17 @@ Hi, welcome to Yushi's repository! You will find sample projects that I've worke
 ## Monte-Carlo Delta-Hedged Option in R
 The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. 
 
-![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Lookback_Options_Varying_Vol.png)
+![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Delta_Hedge_Upward_Jump10.png)
 
 ## Pricing of Fixed Strike Lookback Call and Put Options with Monte-Carlo Simulation in Python
 Monte-Carlo simulation along with antithetic variance reduction were used to simulate the stock price. Initial stock price of $98, strike of $100, interest rate of 3%, 12-month, with varying volatilties from 12% to 48% in increments of 4%.
 
-![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Delta_Hedge_Upward_Jump10.png)
+![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Lookback_Options_Varying_Vol.png)
+
+## How Greeks change over time with varying initial stock price for an European call
+Time step size of dt = 0.004, initial stock price ranges from $15 to $25 in $1 increment, strike of $20, 6 months. Colored lines represent time to maturity in years. Gamma and Theta at the kink (ATM) approach infinity as time to expiration approaches zero. 
+
+![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Euro_Call_Greeks.png)
 
 ## Fama French Market Portfolio Replication
 CRSP data was cleaned according to the Ken-French procedure before calculating the value-weighted and equal-weighted market excess returns. I report a correlation of 0.99998 with the Fama-French value-weighted market portfolio. Summary statistics of the two series are shown below. The full procedure is located here: [README_Fama_French_Mkt_Replication](https://github.com/globalize9/Yushi-Wei/blob/master/README_Fama_French_Mkt_Replication.pdf)
