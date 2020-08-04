@@ -18,6 +18,7 @@ Time step size of dt = 0.004, initial stock price ranges from $15 to $25 in $1 i
 
 ## Estimation of European Call option with Monte-Carlo via discretization of SDE  
 The 2-factor model  for stock prices with stochastic volatility is discretized via Reflection, Partial Truncation and Full Truncation to estimate the European Call option via Monte-Carlo simulation. With 10,000 simulations, the following results were observed: 
+
 Reflection: $4.33288, Partial Truncation: $4.28788, and Full Truncation: $4.39205
 
 <img src ="https://github.com/globalize9/Yushi-Wei/blob/master/Images/Discretization_SDE.png" width="800" height ="300">
