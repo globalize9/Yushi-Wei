@@ -65,12 +65,6 @@ def BSMOptions(S0, r, sigma, T, X, option_type = 'call'):
         option_price = 'invalid selection'
     return(option_price)
 
-BSM_Option_N_Approx = BSMOptionsN_Approx(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
-BSM_Option = BSMOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
-option_price = MonteCarloOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
-print('Monte-Carlo simulated option price is: ${:.5f}'.format(option_price))
-print('BSM option price with normal approximation is: ${:.5f}'.format(BSM_Option_N_Approx))
-print('BSM option price without normal approximation is: ${:.5f}'.format(BSM_Option))
 
 def GreekStudyEuroCall(S_0, r, sigma, T, X, dt):
     def Greeks(S0, r, sigma, T, X):
@@ -113,7 +107,17 @@ def GreekStudyEuroCall(S_0, r, sigma, T, X, dt):
 
     return(D,G,T,V)
 
-D,G,T,V = GreekStudyEuroCall(S_0 = np.arange(15,26,1), r = 0.04, sigma = 0.25, T = 0.5, X = 20, dt = 0.04)
+
+def main():
+    BSM_Option_N_Approx = BSMOptionsN_Approx(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+    BSM_Option = BSMOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+    option_price = MonteCarloOptions(S0 = 15, r = 0.04, sigma = 0.25, T = 0.5, X = 20, option_type = 'call')
+    print('Monte-Carlo simulated option price is: ${:.5f}'.format(option_price))
+    print('BSM option price with normal approximation is: ${:.5f}'.format(BSM_Option_N_Approx))
+    print('BSM option price without normal approximation is: ${:.5f}'.format(BSM_Option))
+    
+    D,G,T,V = GreekStudyEuroCall(S_0 = np.arange(15,26,1), r = 0.04, sigma = 0.25, T = 0.5, X = 20, dt = 0.04)
 
 
-
+if __name__ == '__main__':
+    main()
