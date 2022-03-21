@@ -31,14 +31,15 @@ def BS_Form(S0, r, div, sigma, T, X, opt):
     if opt == 'put': opt_price = -S0 * np.exp(-div * T) * N_d(-d1) + X * np.exp(-r * T) * N_d(-d2)
     return(opt_price, N_d(d1), N_d(d2))
 
-S0 = 100
+S0 = 31
 r = 0
 div = 0 
 sigma = 0.2
 # T = 0.5
-strike = 100
+strike = 31
 call_qty = 2 # optional parameter, otherwise calculate equivalent to 100 shares
 opt_type = 'call'
+IV = [0.8643, 0.791, 0.69, 0.625] ## manual entry for ATM options
 
 # call_params = BS_Form(S0, r, div, sigma, T, strike, 'call')
 # put_params = BS_Form(S0, r, div, sigma, T, strike, 'put')
@@ -55,25 +56,36 @@ def UpperBreak(S0, r, div, sigma, T, strike, opt_type, call_qty = None):
     expr = (unknown_price - S0) - (unknown_price - strike - call_cost) * call_qty
     return round(solve(expr)[0],4)
 
-atm_by_maturity = pd.DataFrame(None, index = [1/12, 3/12, 6/12, 12/12], columns = ['S0','Strike','Delta','Prob_ITM','Upper_Break','Lower_Break', 
-                                                                                   'Opt_Cost_Total', 'Opt_Qty'])
+def TableOut(S0, r, div, IV, strike, opt_type, call_qty = None):
+    atm_by_maturity = pd.DataFrame(None, index = [1/12, 2/12, 5/12, 10/12], columns = ['S0','Strike','Delta','Prob_ITM','Upper_Break','Lower_Break', 
+                                                                                       'Opt_Cost_Total', 'Opt_Qty', 'IV'])    
+    atm_by_maturity['IV'] = IV
+    for mat in atm_by_maturity.index:
+        iv = atm_by_maturity.loc[mat, 'IV']
+        opt_cost, delta, prob_itm = BS_Form(S0, r, div, iv, mat, strike, opt_type)
+        atm_by_maturity.loc[mat, 'S0'] = S0
+        atm_by_maturity.loc[mat, 'Strike'] = strike
+        atm_by_maturity.loc[mat, 'Opt_Qty'] = call_qty
+        atm_by_maturity.loc[mat, 'Opt_Cost_Total'] = opt_cost * call_qty
+        atm_by_maturity.loc[mat, 'Delta'] = delta
+        atm_by_maturity.loc[mat, 'Prob_ITM'] = prob_itm
+        atm_by_maturity.loc[mat, 'Upper_Break'] = UpperBreak(S0, r, div, iv, mat, strike, opt_type, call_qty)
+        atm_by_maturity.loc[mat, 'Lower_Break'] = round(S0 - call_qty * opt_cost,4) # lower breakpoint is equivalent to call premium
+        
+    return atm_by_maturity
 
-for mat in atm_by_maturity.index:
-    opt_cost, delta, prob_itm = BS_Form(S0, r, div, sigma, mat, strike, opt_type)
-    atm_by_maturity.loc[mat, 'S0'] = S0
-    atm_by_maturity.loc[mat, 'Strike'] = strike
-    atm_by_maturity.loc[mat, 'Opt_Qty'] = call_qty
-    atm_by_maturity.loc[mat, 'Opt_Cost_Total'] = opt_cost * call_qty
-    atm_by_maturity.loc[mat, 'Delta'] = delta
-    atm_by_maturity.loc[mat, 'Prob_ITM'] = prob_itm
-    atm_by_maturity.loc[mat, 'Upper_Break'] = UpperBreak(S0, r, div, sigma, mat, strike, opt_type, call_qty)
-    atm_by_maturity.loc[mat, 'Lower_Break'] = round(S0 - call_qty * opt_cost,4) # lower breakpoint is equivalent to call premium
-    
-atm_by_maturity
 
+atm_output = TableOut(S0, r, div, IV, strike, opt_type, 2)
+# observation that the payout range is exactly the same as a straddle...hmmm???
 
+D30_output = TableOut(S0, r, div, IV, 34, opt_type, 3)
 
-
-
+# =============================================================================
+# # potential way to obtain options data directly from yfinance
+# import yfinance as yf
+# kweb = yf.Ticker("KWEB")
+# opt_chain = kweb.option_chain(date='2022-06-17').calls
+# 
+# =============================================================================
 
 
