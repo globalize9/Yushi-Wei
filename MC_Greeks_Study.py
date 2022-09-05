@@ -49,7 +49,7 @@ def BSMOptionsN_Approx(S0, r, sigma, T, X, option_type = 'call'):
     if option_type == 'call':
         option_price = (S0 * N_d(d1) - X * np.exp(-r * T) * N_d(d2))
     if option_type == 'put':
-        option_price = -(S0 * N_d(-d1) + X * np.exp(-r * T) * N_d(-d2))
+        option_price = -S0 * N_d(-d1) + X * np.exp(-r * T) * N_d(-d2)
     if option_type != 'call' and option_type != 'put':
         option_price = 'invalid selection'
     return(option_price)
@@ -60,7 +60,7 @@ def BSMOptions(S0, r, sigma, T, X, option_type = 'call'):
     if option_type == 'call':
         option_price = (S0 * si.norm.cdf(d1) - X * np.exp(-r * T) * si.norm.cdf(d2))
     if option_type == 'put':
-        option_price = -(S0 * si.norm.cdf(-d1) + X * np.exp(-r * T) * si.norm.cdf(-d2))
+        option_price = -S0 * si.norm.cdf(-d1) + X * np.exp(-r * T) * si.norm.cdf(-d2)
     if option_type != 'call' and option_type != 'put':
         option_price = 'invalid selection'
     return(option_price)

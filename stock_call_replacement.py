@@ -80,12 +80,13 @@ atm_output = TableOut(S0, r, div, IV, strike, opt_type, 2)
 
 D30_output = TableOut(S0, r, div, IV, 34, opt_type, 3)
 
-# =============================================================================
-# # potential way to obtain options data directly from yfinance
-# import yfinance as yf
-# kweb = yf.Ticker("KWEB")
-# opt_chain = kweb.option_chain(date='2022-06-17').calls
-# 
-# =============================================================================
+
+# potential way to obtain options data directly from yfinance
+import yfinance as yf
+
+exp_date = '2023-01-20'
+kweb = yf.Ticker("KWEB")
+opt_chain = kweb.option_chain(date=exp_date).calls
+opt_chain.to_csv('kweb_{}'.format(exp_date))
 
 
