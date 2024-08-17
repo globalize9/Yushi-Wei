@@ -2,7 +2,7 @@
 Hi, welcome to Yushi's repository! You will find sample projects that I've worked on here in Python and R. Feel free to reach out if you have any suggestion/comment. Enjoy! 
 
 ## Monte-Carlo Delta-Hedged Option in R
-The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. The question to the reader is now why does the hedge ratio deviate from one if it is Delta-hedged? (hint: look at the replicating portfolio)
+The purpose of this study is to examine the effect of large price movement on the Delta-hedged call option. The stock price was simulated under the risk-neutral measure using geometric Brownian motion. Jump in stock price resulted in imperfect Delta-hedging. For small change in the underlying, the hedge ratio (defined as the ratio of Delta-hedged portfolio to the call option from Black-Scholes) is approximately one. Once the stock price jumps up or down, the hedge ratio deviated significantly from one. The question to the reader is why does the hedge ratio deviate from one if it is Delta-hedged? (hint: look at the replicating portfolio)
 
 ![Sample Simulation](https://github.com/globalize9/Yushi-Wei/blob/master/Images/Delta_Hedge_Upward_Jump10.png)
 
