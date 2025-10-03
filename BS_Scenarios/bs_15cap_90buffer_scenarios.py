@@ -198,18 +198,31 @@ class ScenarioAnalyzer:
         return combined
     
     def run_atm_vol_analysis(self):
-        """ATM Vol vs Rates scenario analysis"""
+        """ATM Vol vs Rates scenario analysis - PARALLEL MOVEMENT of all vols"""
         scenarios = self.create_scenario_grids()
         
         # Create matrix: 11 rows (ATM vol) x 13 columns (rates)
         results_matrix = np.zeros((11, 13))
         
-        print("ATM Vol vs Rates Analysis:")
+        print("ATM Vol vs Rates Analysis (Parallel Movement):")
+        
+        # Calculate base skew levels for parallel shifts
+        base_atm_vol = self.params['atm_vol']
+        base_skew_90 = self.params['vol_90'] - base_atm_vol  # +4% for 90 put
+        base_skew_115 = self.params['vol_115'] - base_atm_vol  # -4% for 115 call
+        
         for i, atm_vol in enumerate(scenarios['atm_vol_scenarios']):
             for j, rate in enumerate(scenarios['rate_scenarios']):
-                # Use base vols for ATM vol analysis (no skew change)
-                vol_90 = self.params['vol_90']
-                vol_115 = self.params['vol_115']
+                # PARALLEL MOVEMENT: Apply same shift to all volatilities
+                # Maintain the same relative skew structure
+                vol_shift = atm_vol - base_atm_vol
+                
+                vol_90 = self.params['vol_90'] + vol_shift
+                vol_115 = self.params['vol_115'] + vol_shift
+                
+                # Ensure volatilities don't go negative
+                vol_90 = max(vol_90, 0.01)
+                vol_115 = max(vol_115, 0.01)
                 
                 individual = self.price_individual_options(
                     self.params['S_0'], rate, self.params['T'], 
@@ -222,6 +235,8 @@ class ScenarioAnalyzer:
                 # Debug print for first row
                 if i == 0 and j == 0:
                     print(f"  Sample calculation - ATM Vol: {atm_vol:.1%}, Rate: {rate:.1%}")
+                    print(f"  Parallel vols - 90P: {vol_90:.1%}, ATM: {atm_vol:.1%}, 115C: {vol_115:.1%}")
+                    print(f"  Vol shifts - 90P: {vol_shift:+.1%}, 115C: {vol_shift:+.1%}")
                     print(f"  Combined Price: {combined['price']:.4f}")
         
         print(f"  Matrix range: {results_matrix.min():.4f} to {results_matrix.max():.4f}")
