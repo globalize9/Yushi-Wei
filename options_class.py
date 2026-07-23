@@ -1,7 +1,12 @@
 from datetime import datetime, date
+from io import BytesIO
 import scipy.stats as si
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from openpyxl.drawing.image import Image
 import yfinance as yf
 
 class Options:
@@ -83,6 +88,71 @@ class Options:
             temp_df = temp_df[temp_df['Diff'] < bs_filter_cutoff].reset_index(drop=True)
         return temp_df
     
+    def plot_implied_moves_by_expiry(self, implied_move_df, ax=None, show=True):
+        if implied_move_df is None or implied_move_df.empty:
+            raise ValueError('implied_move_df must be a non-empty DataFrame')
+
+        required_columns = {'Implied_Move', 'Lower', 'Upper'}
+        missing = required_columns.difference(implied_move_df.columns)
+        if missing:
+            raise ValueError(f'implied_move_df is missing required columns: {sorted(missing)}')
+
+        expiry_labels = [str(x) for x in implied_move_df.index]
+        x = np.arange(len(implied_move_df))
+        lower = implied_move_df['Lower'].astype(float).to_numpy()
+        upper = implied_move_df['Upper'].astype(float).to_numpy()
+        move = implied_move_df['Implied_Move'].astype(float).to_numpy()
+
+        if ax is None:
+            fig, ax = plt.subplots(figsize=(10, 5))
+        else:
+            fig = ax.figure
+
+        ranges = upper - lower
+        bars = ax.bar(x, ranges, bottom=lower, width=0.8, color='steelblue', alpha=0.8)
+
+        for i, (bar, amt) in enumerate(zip(bars, move)):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + bar.get_y() + 0.01 * max(1.0, np.max(ranges)),
+                f'{amt:.2f}',
+                ha='center',
+                va='bottom',
+                fontsize=9,
+            )
+
+        ax.set_xticks(x)
+        ax.set_xticklabels(expiry_labels, rotation=45, ha='right')
+        ax.set_ylabel('Price range')
+        ax.set_xlabel('Expiry')
+        ax.set_title(f'{self.ticker} implied move ranges by expiry')
+        ax.grid(axis='y', linestyle='--', alpha=0.3)
+
+        if show:
+            plt.tight_layout()
+            plt.show()
+
+        return fig, ax
+
+    def write_implied_move_chart_to_excel(self, implied_move_df, writer, sheet_name='ImpliedMoveChart'):
+        fig, _ = self.plot_implied_moves_by_expiry(implied_move_df, show=False)
+
+        img_buffer = BytesIO()
+        fig.savefig(img_buffer, format='png', dpi=300, bbox_inches='tight')
+        img_buffer.seek(0)
+
+        workbook = writer.book
+        if sheet_name in workbook.sheetnames:
+            workbook.remove(workbook[sheet_name])
+
+        ws = workbook.create_sheet(title=sheet_name)
+        img = Image(img_buffer)
+        ws.add_image(img, 'A1')
+        ws.column_dimensions['A'].width = 40
+        ws.row_dimensions[1].height = 320
+        plt.close(fig)
+        return ws
+
     def MainDF(self):
         opt_exp_date = self.expiry_dates[0] # temp use of the first exp date
         
@@ -141,3 +211,4 @@ if __name__ == '__main__':
         out_dfs[0].to_excel(writer, sheet_name = 'ProbITM')
         out_dfs[1].to_excel(writer, sheet_name = 'TimeValue')
         out_dfs[2].to_excel(writer, sheet_name = 'ImpliedMove')
+        kweb_opt.write_implied_move_chart_to_excel(out_dfs[2], writer, sheet_name='ImpliedMoveChart')
